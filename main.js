@@ -16,31 +16,36 @@ let sensors = [
         name: 'temperature',
         value: 20,
         min: 15,
-        max: 25
+        max: 25,
+        mac: generateRandomMacAddress()
     },
     {
         name: 'humidity',
         value: 50,
         min: 30,
-        max: 70
+        max: 70,
+        mac: generateRandomMacAddress()
     },
     {
         name: 'luminosity',
         value: 300,
         min: 100,
-        max: 500
+        max: 500,
+        mac: generateRandomMacAddress()
     },
     {
         name: 'pressure',
         value: 1013,
         min: 980,
-        max: 1050
+        max: 1050,
+        mac: generateRandomMacAddress()
     },
     {
         name: 'air_quality',
         value: 100,
         min: 50,
-        max: 150
+        max: 150,
+        mac: generateRandomMacAddress()
     }
 ];
 
@@ -72,6 +77,7 @@ function publishSensorData() {
 
         const topic = `sensors/${sensor.name}`;
         const message = JSON.stringify({
+            mac: sensor.mac,
             value: sensor.value.toFixed(2),
             timestamp: new Date().toISOString()
         });
@@ -84,4 +90,10 @@ function publishSensorData() {
             }
         });
     });
+}
+
+function generateRandomMacAddress() {
+    return Array.from({ length: 6 }, () => {
+        return Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+    }).join(':');
 }
