@@ -78,7 +78,7 @@ function publishSensorData() {
         const topic = `sensors/${sensor.name}`;
         const message = JSON.stringify({
             mac: sensor.mac,
-            value: sensor.value.toFixed(2),
+            value: Number(sensor.value.toFixed(2)),
             timestamp: new Date().toISOString()
         });
 
